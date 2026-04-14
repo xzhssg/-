@@ -29,13 +29,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
+/**
+ * TaskList类表示GTask中的一个任务列表（对应便签应用中的文件夹）。
+ * 继承自Node，维护子任务（Task）列表，并支持任务的增删改查及排序。
+ */
 public class TaskList extends Node {
     private static final String TAG = TaskList.class.getSimpleName();
 
-    private int mIndex;
-
-    private ArrayList<Task> mChildren;
+    private int mIndex;                     // 在GTask中的索引（用于排序）
+    private ArrayList<Task> mChildren;      // 子任务列表
 
     public TaskList() {
         super();
@@ -43,84 +45,64 @@ public class TaskList extends Node {
         mIndex = 1;
     }
 
+    /**
+     * 生成用于创建任务列表的JSON操作对象
+     */
     public JSONObject getCreateAction(int actionId) {
         JSONObject js = new JSONObject();
-
         try {
-            // action_type
-            js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE,
-                    GTaskStringUtils.GTASK_JSON_ACTION_TYPE_CREATE);
-
-            // action_id
+            js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE, GTaskStringUtils.GTASK_JSON_ACTION_TYPE_CREATE);
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_ID, actionId);
-
-            // index
             js.put(GTaskStringUtils.GTASK_JSON_INDEX, mIndex);
-
-            // entity_delta
             JSONObject entity = new JSONObject();
             entity.put(GTaskStringUtils.GTASK_JSON_NAME, getName());
             entity.put(GTaskStringUtils.GTASK_JSON_CREATOR_ID, "null");
-            entity.put(GTaskStringUtils.GTASK_JSON_ENTITY_TYPE,
-                    GTaskStringUtils.GTASK_JSON_TYPE_GROUP);
+            entity.put(GTaskStringUtils.GTASK_JSON_ENTITY_TYPE, GTaskStringUtils.GTASK_JSON_TYPE_GROUP);
             js.put(GTaskStringUtils.GTASK_JSON_ENTITY_DELTA, entity);
-
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
             throw new ActionFailureException("fail to generate tasklist-create jsonobject");
         }
-
         return js;
     }
 
+    /**
+     * 生成用于更新任务列表的JSON操作对象
+     */
     public JSONObject getUpdateAction(int actionId) {
         JSONObject js = new JSONObject();
-
         try {
-            // action_type
-            js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE,
-                    GTaskStringUtils.GTASK_JSON_ACTION_TYPE_UPDATE);
-
-            // action_id
+            js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE, GTaskStringUtils.GTASK_JSON_ACTION_TYPE_UPDATE);
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_ID, actionId);
-
-            // id
             js.put(GTaskStringUtils.GTASK_JSON_ID, getGid());
-
-            // entity_delta
             JSONObject entity = new JSONObject();
             entity.put(GTaskStringUtils.GTASK_JSON_NAME, getName());
             entity.put(GTaskStringUtils.GTASK_JSON_DELETED, getDeleted());
             js.put(GTaskStringUtils.GTASK_JSON_ENTITY_DELTA, entity);
-
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
             e.printStackTrace();
             throw new ActionFailureException("fail to generate tasklist-update jsonobject");
         }
-
         return js;
     }
 
+    /**
+     * 根据远程JSON设置任务列表内容
+     */
     public void setContentByRemoteJSON(JSONObject js) {
         if (js != null) {
             try {
-                // id
                 if (js.has(GTaskStringUtils.GTASK_JSON_ID)) {
                     setGid(js.getString(GTaskStringUtils.GTASK_JSON_ID));
                 }
-
-                // last_modified
                 if (js.has(GTaskStringUtils.GTASK_JSON_LAST_MODIFIED)) {
                     setLastModified(js.getLong(GTaskStringUtils.GTASK_JSON_LAST_MODIFIED));
                 }
-
-                // name
                 if (js.has(GTaskStringUtils.GTASK_JSON_NAME)) {
                     setName(js.getString(GTaskStringUtils.GTASK_JSON_NAME));
                 }
-
             } catch (JSONException e) {
                 Log.e(TAG, e.toString());
                 e.printStackTrace();
@@ -129,14 +111,16 @@ public class TaskList extends Node {
         }
     }
 
+    /**
+     * 根据本地JSON设置内容（用于同步到远程）
+     */
     public void setContentByLocalJSON(JSONObject js) {
         if (js == null || !js.has(GTaskStringUtils.META_HEAD_NOTE)) {
-            Log.w(TAG, "setContentByLocalJSON: nothing is avaiable");
+            Log.w(TAG, "setContentByLocalJSON: nothing is available");
+            return;
         }
-
         try {
             JSONObject folder = js.getJSONObject(GTaskStringUtils.META_HEAD_NOTE);
-
             if (folder.getInt(NoteColumns.TYPE) == Notes.TYPE_FOLDER) {
                 String name = folder.getString(NoteColumns.SNIPPET);
                 setName(GTaskStringUtils.MIUI_FOLDER_PREFFIX + name);
@@ -144,8 +128,7 @@ public class TaskList extends Node {
                 if (folder.getLong(NoteColumns.ID) == Notes.ID_ROOT_FOLDER)
                     setName(GTaskStringUtils.MIUI_FOLDER_PREFFIX + GTaskStringUtils.FOLDER_DEFAULT);
                 else if (folder.getLong(NoteColumns.ID) == Notes.ID_CALL_RECORD_FOLDER)
-                    setName(GTaskStringUtils.MIUI_FOLDER_PREFFIX
-                            + GTaskStringUtils.FOLDER_CALL_NOTE);
+                    setName(GTaskStringUtils.MIUI_FOLDER_PREFFIX + GTaskStringUtils.FOLDER_CALL_NOTE);
                 else
                     Log.e(TAG, "invalid system folder");
             } else {
@@ -157,24 +140,22 @@ public class TaskList extends Node {
         }
     }
 
+    /**
+     * 获取本地JSON表示，用于同步到远程
+     */
     public JSONObject getLocalJSONFromContent() {
         try {
             JSONObject js = new JSONObject();
             JSONObject folder = new JSONObject();
-
             String folderName = getName();
             if (getName().startsWith(GTaskStringUtils.MIUI_FOLDER_PREFFIX))
-                folderName = folderName.substring(GTaskStringUtils.MIUI_FOLDER_PREFFIX.length(),
-                        folderName.length());
+                folderName = folderName.substring(GTaskStringUtils.MIUI_FOLDER_PREFFIX.length());
             folder.put(NoteColumns.SNIPPET, folderName);
-            if (folderName.equals(GTaskStringUtils.FOLDER_DEFAULT)
-                    || folderName.equals(GTaskStringUtils.FOLDER_CALL_NOTE))
+            if (folderName.equals(GTaskStringUtils.FOLDER_DEFAULT) || folderName.equals(GTaskStringUtils.FOLDER_CALL_NOTE))
                 folder.put(NoteColumns.TYPE, Notes.TYPE_SYSTEM);
             else
                 folder.put(NoteColumns.TYPE, Notes.TYPE_FOLDER);
-
             js.put(GTaskStringUtils.META_HEAD_NOTE, folder);
-
             return js;
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
@@ -183,28 +164,26 @@ public class TaskList extends Node {
         }
     }
 
+    /**
+     * 根据本地数据库Cursor判断同步动作
+     */
     public int getSyncAction(Cursor c) {
         try {
             if (c.getInt(SqlNote.LOCAL_MODIFIED_COLUMN) == 0) {
-                // there is no local update
                 if (c.getLong(SqlNote.SYNC_ID_COLUMN) == getLastModified()) {
-                    // no update both side
                     return SYNC_ACTION_NONE;
                 } else {
-                    // apply remote to local
                     return SYNC_ACTION_UPDATE_LOCAL;
                 }
             } else {
-                // validate gtask id
                 if (!c.getString(SqlNote.GTASK_ID_COLUMN).equals(getGid())) {
                     Log.e(TAG, "gtask id doesn't match");
                     return SYNC_ACTION_ERROR;
                 }
                 if (c.getLong(SqlNote.SYNC_ID_COLUMN) == getLastModified()) {
-                    // local modification only
                     return SYNC_ACTION_UPDATE_REMOTE;
                 } else {
-                    // for folder conflicts, just apply local modification
+                    // 文件夹冲突时，优先采用本地修改
                     return SYNC_ACTION_UPDATE_REMOTE;
                 }
             }
@@ -212,22 +191,18 @@ public class TaskList extends Node {
             Log.e(TAG, e.toString());
             e.printStackTrace();
         }
-
         return SYNC_ACTION_ERROR;
     }
 
-    public int getChildTaskCount() {
-        return mChildren.size();
-    }
+    // 子任务管理方法
+    public int getChildTaskCount() { return mChildren.size(); }
 
     public boolean addChildTask(Task task) {
         boolean ret = false;
         if (task != null && !mChildren.contains(task)) {
             ret = mChildren.add(task);
             if (ret) {
-                // need to set prior sibling and parent
-                task.setPriorSibling(mChildren.isEmpty() ? null : mChildren
-                        .get(mChildren.size() - 1));
+                task.setPriorSibling(mChildren.isEmpty() ? null : mChildren.get(mChildren.size() - 1));
                 task.setParent(this);
             }
         }
@@ -239,24 +214,16 @@ public class TaskList extends Node {
             Log.e(TAG, "add child task: invalid index");
             return false;
         }
-
         int pos = mChildren.indexOf(task);
         if (task != null && pos == -1) {
             mChildren.add(index, task);
-
-            // update the task list
             Task preTask = null;
             Task afterTask = null;
-            if (index != 0)
-                preTask = mChildren.get(index - 1);
-            if (index != mChildren.size() - 1)
-                afterTask = mChildren.get(index + 1);
-
+            if (index != 0) preTask = mChildren.get(index - 1);
+            if (index != mChildren.size() - 1) afterTask = mChildren.get(index + 1);
             task.setPriorSibling(preTask);
-            if (afterTask != null)
-                afterTask.setPriorSibling(task);
+            if (afterTask != null) afterTask.setPriorSibling(task);
         }
-
         return true;
     }
 
@@ -265,16 +232,11 @@ public class TaskList extends Node {
         int index = mChildren.indexOf(task);
         if (index != -1) {
             ret = mChildren.remove(task);
-
             if (ret) {
-                // reset prior sibling and parent
                 task.setPriorSibling(null);
                 task.setParent(null);
-
-                // update the task list
                 if (index != mChildren.size()) {
-                    mChildren.get(index).setPriorSibling(
-                            index == 0 ? null : mChildren.get(index - 1));
+                    mChildren.get(index).setPriorSibling(index == 0 ? null : mChildren.get(index - 1));
                 }
             }
         }
@@ -282,36 +244,27 @@ public class TaskList extends Node {
     }
 
     public boolean moveChildTask(Task task, int index) {
-
         if (index < 0 || index >= mChildren.size()) {
             Log.e(TAG, "move child task: invalid index");
             return false;
         }
-
         int pos = mChildren.indexOf(task);
         if (pos == -1) {
             Log.e(TAG, "move child task: the task should in the list");
             return false;
         }
-
-        if (pos == index)
-            return true;
+        if (pos == index) return true;
         return (removeChildTask(task) && addChildTask(task, index));
     }
 
     public Task findChildTaskByGid(String gid) {
-        for (int i = 0; i < mChildren.size(); i++) {
-            Task t = mChildren.get(i);
-            if (t.getGid().equals(gid)) {
-                return t;
-            }
+        for (Task t : mChildren) {
+            if (t.getGid().equals(gid)) return t;
         }
         return null;
     }
 
-    public int getChildTaskIndex(Task task) {
-        return mChildren.indexOf(task);
-    }
+    public int getChildTaskIndex(Task task) { return mChildren.indexOf(task); }
 
     public Task getChildTaskByIndex(int index) {
         if (index < 0 || index >= mChildren.size()) {
@@ -323,21 +276,13 @@ public class TaskList extends Node {
 
     public Task getChilTaskByGid(String gid) {
         for (Task task : mChildren) {
-            if (task.getGid().equals(gid))
-                return task;
+            if (task.getGid().equals(gid)) return task;
         }
         return null;
     }
 
-    public ArrayList<Task> getChildTaskList() {
-        return this.mChildren;
-    }
+    public ArrayList<Task> getChildTaskList() { return this.mChildren; }
 
-    public void setIndex(int index) {
-        this.mIndex = index;
-    }
-
-    public int getIndex() {
-        return this.mIndex;
-    }
+    public void setIndex(int index) { this.mIndex = index; }
+    public int getIndex() { return this.mIndex; }
 }

@@ -34,48 +34,41 @@ import net.micode.notes.gtask.exception.ActionFailureException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+/**
+ * SqlData类封装了对数据库data表记录的操作，用于GTask同步。
+ * 它可以从Cursor加载数据，也可以根据JSON设置内容，并将更改提交到数据库。
+ */
 public class SqlData {
     private static final String TAG = SqlData.class.getSimpleName();
+    private static final int INVALID_ID = -99999;   // 无效ID标识
 
-    private static final int INVALID_ID = -99999;
-
+    // 查询data表常用的投影列
     public static final String[] PROJECTION_DATA = new String[] {
             DataColumns.ID, DataColumns.MIME_TYPE, DataColumns.CONTENT, DataColumns.DATA1,
             DataColumns.DATA3
     };
 
+    // 列索引常量
     public static final int DATA_ID_COLUMN = 0;
-
     public static final int DATA_MIME_TYPE_COLUMN = 1;
-
     public static final int DATA_CONTENT_COLUMN = 2;
-
     public static final int DATA_CONTENT_DATA_1_COLUMN = 3;
-
     public static final int DATA_CONTENT_DATA_3_COLUMN = 4;
 
     private ContentResolver mContentResolver;
-
-    private boolean mIsCreate;
-
+    private boolean mIsCreate;                  // 标记是否为新建（尚未在数据库中存在）
     private long mDataId;
-
     private String mDataMimeType;
-
     private String mDataContent;
-
     private long mDataContentData1;
-
     private String mDataContentData3;
-
-    private ContentValues mDiffDataValues;
+    private ContentValues mDiffDataValues;      // 存储待提交的更改
 
     public SqlData(Context context) {
         mContentResolver = context.getContentResolver();
         mIsCreate = true;
         mDataId = INVALID_ID;
-        mDataMimeType = DataConstants.NOTE;
+        mDataMimeType = DataConstants.NOTE;     // 默认为文本便签类型
         mDataContent = "";
         mDataContentData1 = 0;
         mDataContentData3 = "";
@@ -89,6 +82,9 @@ public class SqlData {
         mDiffDataValues = new ContentValues();
     }
 
+    /**
+     * 从Cursor加载数据
+     */
     private void loadFromCursor(Cursor c) {
         mDataId = c.getLong(DATA_ID_COLUMN);
         mDataMimeType = c.getString(DATA_MIME_TYPE_COLUMN);
@@ -97,6 +93,9 @@ public class SqlData {
         mDataContentData3 = c.getString(DATA_CONTENT_DATA_3_COLUMN);
     }
 
+    /**
+     * 根据JSON设置内容，并记录差异到mDiffDataValues
+     */
     public void setContent(JSONObject js) throws JSONException {
         long dataId = js.has(DataColumns.ID) ? js.getLong(DataColumns.ID) : INVALID_ID;
         if (mIsCreate || mDataId != dataId) {
@@ -130,6 +129,9 @@ public class SqlData {
         mDataContentData3 = dataContentData3;
     }
 
+    /**
+     * 获取当前数据内容的JSON表示
+     */
     public JSONObject getContent() throws JSONException {
         if (mIsCreate) {
             Log.e(TAG, "it seems that we haven't created this in database yet");
@@ -144,9 +146,15 @@ public class SqlData {
         return js;
     }
 
+    /**
+     * 提交更改到数据库。
+     * @param noteId 所属便签ID
+     * @param validateVersion 是否进行版本校验（乐观锁）
+     * @param version 用于校验的版本号
+     */
     public void commit(long noteId, boolean validateVersion, long version) {
-
         if (mIsCreate) {
+            // 如果是新建，移除可能存在的无效ID
             if (mDataId == INVALID_ID && mDiffDataValues.containsKey(DataColumns.ID)) {
                 mDiffDataValues.remove(DataColumns.ID);
             }
@@ -166,8 +174,9 @@ public class SqlData {
                     result = mContentResolver.update(ContentUris.withAppendedId(
                             Notes.CONTENT_DATA_URI, mDataId), mDiffDataValues, null, null);
                 } else {
+                    // 版本校验：只有note的版本号匹配时才更新
                     result = mContentResolver.update(ContentUris.withAppendedId(
-                            Notes.CONTENT_DATA_URI, mDataId), mDiffDataValues,
+                                    Notes.CONTENT_DATA_URI, mDataId), mDiffDataValues,
                             " ? in (SELECT " + NoteColumns.ID + " FROM " + TABLE.NOTE
                                     + " WHERE " + NoteColumns.VERSION + "=?)", new String[] {
                                     String.valueOf(noteId), String.valueOf(version)

@@ -16,6 +16,10 @@
 
 package net.micode.notes.gtask.exception;
 
+/**
+ * 自定义异常，表示GTask同步过程中的网络错误。
+ * 继承自Exception，需要显式捕获处理。
+ */
 public class NetworkFailureException extends Exception {
     private static final long serialVersionUID = 2107610287180234136L;
 

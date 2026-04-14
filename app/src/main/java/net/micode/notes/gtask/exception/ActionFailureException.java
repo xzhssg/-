@@ -16,6 +16,9 @@
 
 package net.micode.notes.gtask.exception;
 
+/**
+ * 自定义运行时异常，表示GTask操作过程中的动作失败（如JSON解析错误、逻辑错误等）。
+ */
 public class ActionFailureException extends RuntimeException {
     private static final long serialVersionUID = 4425249765923293627L;
 

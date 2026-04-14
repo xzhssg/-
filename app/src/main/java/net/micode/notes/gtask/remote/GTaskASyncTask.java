@@ -30,11 +30,14 @@ import net.micode.notes.R;
 import net.micode.notes.ui.NotesListActivity;
 import net.micode.notes.ui.NotesPreferenceActivity;
 
-
+/**
+ * 异步任务，用于在后台执行GTask同步操作，并通过通知栏显示进度和结果。
+ */
 public class GTaskASyncTask extends AsyncTask<Void, String, Integer> {
 
-    private static int GTASK_SYNC_NOTIFICATION_ID = 5234235;
+    private static int GTASK_SYNC_NOTIFICATION_ID = 5234235;  // 通知ID
 
+    // 同步完成监听器接口
     public interface OnCompleteListener {
         void onComplete();
     }
@@ -59,12 +62,18 @@ public class GTaskASyncTask extends AsyncTask<Void, String, Integer> {
         mTaskManager.cancelSync();
     }
 
+    /**
+     * 发布进度更新，会触发onProgressUpdate
+     */
     public void publishProgess(String message) {
         publishProgress(new String[] {
             message
         });
     }
 
+    /**
+     * 显示通知
+     */
     private void showNotification(int tickerId, String content) {
         PendingIntent pendingIntent;
         if (tickerId != R.string.ticker_success) {
@@ -101,6 +110,7 @@ public class GTaskASyncTask extends AsyncTask<Void, String, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
+        // 根据同步结果显示不同的通知
         if (result == GTaskManager.STATE_SUCCESS) {
             showNotification(R.string.ticker_success, mContext.getString(
                     R.string.success_sync_account, mTaskManager.getSyncAccount()));
