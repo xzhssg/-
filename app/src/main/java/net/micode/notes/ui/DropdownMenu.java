@@ -27,17 +27,36 @@ import android.widget.PopupMenu.OnMenuItemClickListener;
 
 import net.micode.notes.R;
 
+/**
+ * 下拉菜单封装类
+ * 作用：将一个 Button 封装成带弹出菜单的下拉选择控件
+ */
 public class DropdownMenu {
+    // 显示下拉菜单的按钮
     private Button mButton;
+    // 弹出式菜单对象
     private PopupMenu mPopupMenu;
+    // 菜单实例，用于操作菜单项
     private Menu mMenu;
 
+    /**
+     * 构造方法：初始化下拉菜单
+     * @param context 上下文
+     * @param button 绑定的按钮
+     * @param menuId 菜单布局文件ID
+     */
     public DropdownMenu(Context context, Button button, int menuId) {
         mButton = button;
+        // 设置按钮的背景图标（下拉箭头）
         mButton.setBackgroundResource(R.drawable.dropdown_icon);
+        // 创建弹出菜单，绑定到按钮上
         mPopupMenu = new PopupMenu(context, mButton);
+        // 获取菜单对象
         mMenu = mPopupMenu.getMenu();
+        // 加载菜单布局文件到菜单中
         mPopupMenu.getMenuInflater().inflate(menuId, mMenu);
+
+        // 设置按钮点击事件：点击时显示下拉菜单
         mButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mPopupMenu.show();
@@ -45,16 +64,29 @@ public class DropdownMenu {
         });
     }
 
+    /**
+     * 设置菜单项点击监听
+     * @param listener 菜单项点击监听器
+     */
     public void setOnDropdownMenuItemClickListener(OnMenuItemClickListener listener) {
         if (mPopupMenu != null) {
             mPopupMenu.setOnMenuItemClickListener(listener);
         }
     }
 
+    /**
+     * 根据ID查找菜单项
+     * @param id 菜单项ID
+     * @return 对应的MenuItem
+     */
     public MenuItem findItem(int id) {
         return mMenu.findItem(id);
     }
 
+    /**
+     * 设置按钮显示的文字
+     * @param title 按钮文字
+     */
     public void setTitle(CharSequence title) {
         mButton.setText(title);
     }
