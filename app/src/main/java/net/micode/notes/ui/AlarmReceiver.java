@@ -20,11 +20,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+/**
+ * 闹钟提醒广播接收器
+ * 当设置的便签提醒时间到达时，系统会触发此接收器
+ */
 public class AlarmReceiver extends BroadcastReceiver {
+
+    /**
+     * 接收到闹钟广播时执行
+     * @param context 上下文
+     * @param intent 携带便签信息的意图
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
+        // 将意图目标页面切换到提醒弹窗页面
         intent.setClass(context, AlarmAlertActivity.class);
+        // 添加新任务栈标记：广播接收器中启动Activity必须添加此标志
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // 启动提醒页面，显示便签提醒
         context.startActivity(intent);
     }
 }
