@@ -39,21 +39,25 @@ import net.micode.notes.tool.DataUtils;
 
 import java.io.IOException;
 
-
+/**
+ * 笔记提醒弹窗 Activity
+ * 功能：当笔记设置的提醒时间到达时，弹出全屏提醒对话框，播放提示音，并可直接进入编辑页面
+ */
 public class AlarmAlertActivity extends Activity implements OnClickListener, OnDismissListener {
-    private long mNoteId;
-    private String mSnippet;
-    private static final int SNIPPET_PREW_MAX_LEN = 60;
-    MediaPlayer mPlayer;
+    private long mNoteId;                  // 提醒对应的笔记ID
+    private String mSnippet;               // 笔记预览内容
+    private static final int SNIPPET_PREW_MAX_LEN = 60;  // 预览内容最大长度
+    MediaPlayer mPlayer;                   // 媒体播放器，播放提醒铃声
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);  // 去掉标题栏
 
         final Window win = getWindow();
-        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);  // 锁屏时也能显示
 
+        // 如果屏幕关闭，点亮屏幕并保持常亮
         if (!isScreenOn()) {
             win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
@@ -64,8 +68,11 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         Intent intent = getIntent();
 
         try {
+            // 从Intent中获取笔记ID
             mNoteId = Long.valueOf(intent.getData().getPathSegments().get(1));
+            // 获取笔记预览文本
             mSnippet = DataUtils.getSnippetById(this.getContentResolver(), mNoteId);
+            // 预览文本过长时截取并添加省略号
             mSnippet = mSnippet.length() > SNIPPET_PREW_MAX_LEN ? mSnippet.substring(0,
                     SNIPPET_PREW_MAX_LEN) + getResources().getString(R.string.notelist_string_info)
                     : mSnippet;
@@ -75,64 +82,74 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         }
 
         mPlayer = new MediaPlayer();
+        // 检查笔记是否有效（存在且未删除）
         if (DataUtils.visibleInNoteDatabase(getContentResolver(), mNoteId, Notes.TYPE_NOTE)) {
-            showActionDialog();
-            playAlarmSound();
+            showActionDialog();   // 弹出提醒对话框
+            playAlarmSound();     // 播放提醒声音
         } else {
             finish();
         }
     }
 
+    /**
+     * 判断当前屏幕是否处于点亮状态
+     */
     private boolean isScreenOn() {
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         return pm.isScreenOn();
     }
 
+    /**
+     * 播放系统默认提醒铃声
+     */
     private void playAlarmSound() {
         Uri url = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_ALARM);
 
+        // 获取静音模式设置
         int silentModeStreams = Settings.System.getInt(getContentResolver(),
                 Settings.System.MODE_RINGER_STREAMS_AFFECTED, 0);
 
+        // 设置音频流类型为闹钟
         if ((silentModeStreams & (1 << AudioManager.STREAM_ALARM)) != 0) {
             mPlayer.setAudioStreamType(silentModeStreams);
         } else {
             mPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
         }
+
         try {
             mPlayer.setDataSource(this, url);
             mPlayer.prepare();
-            mPlayer.setLooping(true);
+            mPlayer.setLooping(true);  // 循环播放
             mPlayer.start();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * 显示提醒对话框
+     */
     private void showActionDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(R.string.app_name);
-        dialog.setMessage(mSnippet);
-        dialog.setPositiveButton(R.string.notealert_ok, this);
+        dialog.setMessage(mSnippet);  // 显示笔记内容
+        dialog.setPositiveButton(R.string.notealert_ok, this);  // 确定按钮
+
+        // 如果屏幕已亮，显示“进入笔记”按钮
         if (isScreenOn()) {
             dialog.setNegativeButton(R.string.notealert_enter, this);
         }
+
         dialog.show().setOnDismissListener(this);
     }
 
+    /**
+     * 对话框按钮点击事件
+     */
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case DialogInterface.BUTTON_NEGATIVE:
+                // 进入笔记编辑页面
                 Intent intent = new Intent(this, NoteEditActivity.class);
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.putExtra(Intent.EXTRA_UID, mNoteId);
@@ -143,11 +160,17 @@ public class AlarmAlertActivity extends Activity implements OnClickListener, OnD
         }
     }
 
+    /**
+     * 对话框消失时停止铃声并关闭页面
+     */
     public void onDismiss(DialogInterface dialog) {
         stopAlarmSound();
         finish();
     }
 
+    /**
+     * 停止提醒铃声并释放资源
+     */
     private void stopAlarmSound() {
         if (mPlayer != null) {
             mPlayer.stop();
