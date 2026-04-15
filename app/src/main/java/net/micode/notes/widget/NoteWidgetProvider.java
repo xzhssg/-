@@ -32,21 +32,26 @@ import net.micode.notes.tool.ResourceParser;
 import net.micode.notes.ui.NoteEditActivity;
 import net.micode.notes.ui.NotesListActivity;
 
+// 笔记桌面小部件的抽象父类
 public abstract class NoteWidgetProvider extends AppWidgetProvider {
+    // 数据库查询字段：只查询 id、背景色、内容摘要
     public static final String [] PROJECTION = new String [] {
         NoteColumns.ID,
         NoteColumns.BG_COLOR_ID,
         NoteColumns.SNIPPET
     };
 
+    // 字段下标，方便使用
     public static final int COLUMN_ID           = 0;
     public static final int COLUMN_BG_COLOR_ID  = 1;
     public static final int COLUMN_SNIPPET      = 2;
 
     private static final String TAG = "NoteWidgetProvider";
 
+    // 小部件被删除时调用
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
+        // 将笔记对应的 widget id 置为无效
         ContentValues values = new ContentValues();
         values.put(NoteColumns.WIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         for (int i = 0; i < appWidgetIds.length; i++) {
@@ -57,6 +62,7 @@ public abstract class NoteWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    // 根据小部件id查询绑定的笔记信息
     private Cursor getNoteWidgetInfo(Context context, int widgetId) {
         return context.getContentResolver().query(Notes.CONTENT_NOTE_URI,
                 PROJECTION,
@@ -65,41 +71,50 @@ public abstract class NoteWidgetProvider extends AppWidgetProvider {
                 null);
     }
 
+    // 更新小部件（公开方法）
     protected void update(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         update(context, appWidgetManager, appWidgetIds, false);
     }
 
+    // 实际执行小部件界面更新
     private void update(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds,
             boolean privacyMode) {
         for (int i = 0; i < appWidgetIds.length; i++) {
             if (appWidgetIds[i] != AppWidgetManager.INVALID_APPWIDGET_ID) {
                 int bgId = ResourceParser.getDefaultBgId(context);
                 String snippet = "";
+                // 点击小部件跳转到编辑页面
                 Intent intent = new Intent(context, NoteEditActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtra(Notes.INTENT_EXTRA_WIDGET_ID, appWidgetIds[i]);
                 intent.putExtra(Notes.INTENT_EXTRA_WIDGET_TYPE, getWidgetType());
 
+                // 查询当前小部件绑定的笔记
                 Cursor c = getNoteWidgetInfo(context, appWidgetIds[i]);
                 if (c != null && c.moveToFirst()) {
+                    // 异常：一个widget绑定了多条笔记
                     if (c.getCount() > 1) {
                         Log.e(TAG, "Multiple message with same widget id:" + appWidgetIds[i]);
                         c.close();
                         return;
                     }
+                    // 获取笔记内容和背景色
                     snippet = c.getString(COLUMN_SNIPPET);
                     bgId = c.getInt(COLUMN_BG_COLOR_ID);
                     intent.putExtra(Intent.EXTRA_UID, c.getLong(COLUMN_ID));
                     intent.setAction(Intent.ACTION_VIEW);
                 } else {
+                    // 没有笔记时显示默认提示
                     snippet = context.getResources().getString(R.string.widget_havenot_content);
                     intent.setAction(Intent.ACTION_INSERT_OR_EDIT);
                 }
 
+                // 关闭游标防止泄漏
                 if (c != null) {
                     c.close();
                 }
 
+                // 加载小部件布局
                 RemoteViews rv = new RemoteViews(context.getPackageName(), getLayoutId());
                 rv.setImageViewResource(R.id.widget_bg_image, getBgResourceId(bgId));
                 intent.putExtra(Notes.INTENT_EXTRA_BACKGROUND_ID, bgId);
@@ -108,25 +123,31 @@ public abstract class NoteWidgetProvider extends AppWidgetProvider {
                  */
                 PendingIntent pendingIntent = null;
                 if (privacyMode) {
+                    // 隐私模式：显示统一文字
                     rv.setTextViewText(R.id.widget_text,
                             context.getString(R.string.widget_under_visit_mode));
                     pendingIntent = PendingIntent.getActivity(context, appWidgetIds[i], new Intent(
                             context, NotesListActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
                 } else {
+                    // 正常模式：显示笔记内容
                     rv.setTextViewText(R.id.widget_text, snippet);
                     pendingIntent = PendingIntent.getActivity(context, appWidgetIds[i], intent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
                 }
 
+                // 设置点击事件
                 rv.setOnClickPendingIntent(R.id.widget_text, pendingIntent);
                 appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
             }
         }
     }
 
+    // 获取背景资源（子类实现）
     protected abstract int getBgResourceId(int bgId);
 
+    // 获取布局id（子类实现）
     protected abstract int getLayoutId();
 
+    // 获取小部件类型（子类实现）
     protected abstract int getWidgetType();
 }
