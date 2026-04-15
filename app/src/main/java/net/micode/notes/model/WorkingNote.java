@@ -1,4 +1,3 @@
-```java
 // 版权声明第一行
 /*
  * Copyright (c) 2010-2011, The MiCode Open Source Community (www.micode.net)
@@ -439,4 +438,4 @@ public class WorkingNote {
         void onCheckListModeChanged(int oldMode, int newMode);
     }
 }
-```
+
