@@ -22,24 +22,35 @@ import android.preference.PreferenceManager;
 import net.micode.notes.R;
 import net.micode.notes.ui.NotesPreferenceActivity;
 
+/**
+ * 资源解析工具类
+ * 作用：统一管理笔记的背景颜色、文字大小、列表样式、Widget 背景等资源获取
+ * 让界面根据配置自动切换对应图片和样式
+ */
 public class ResourceParser {
 
-    public static final int YELLOW           = 0;
-    public static final int BLUE             = 1;
-    public static final int WHITE            = 2;
-    public static final int GREEN            = 3;
-    public static final int RED              = 4;
+    // ==================== 背景颜色类型常量 ====================
+    public static final int YELLOW           = 0; // 黄色
+    public static final int BLUE             = 1; // 蓝色
+    public static final int WHITE            = 2; // 白色
+    public static final int GREEN            = 3; // 绿色
+    public static final int RED              = 4; // 红色
 
+    // 默认背景颜色（黄色）
     public static final int BG_DEFAULT_COLOR = YELLOW;
 
-    public static final int TEXT_SMALL       = 0;
-    public static final int TEXT_MEDIUM      = 1;
-    public static final int TEXT_LARGE       = 2;
-    public static final int TEXT_SUPER       = 3;
+    // ==================== 文字大小类型常量 ====================
+    public static final int TEXT_SMALL       = 0; // 小
+    public static final int TEXT_MEDIUM      = 1; // 中
+    public static final int TEXT_LARGE       = 2; // 大
+    public static final int TEXT_SUPER       = 3; // 超大
 
+    // 默认字体大小（中等）
     public static final int BG_DEFAULT_FONT_SIZE = TEXT_MEDIUM;
 
+    // ==================== 编辑页面背景资源 ====================
     public static class NoteBgResources {
+        // 编辑页面背景图片
         private final static int [] BG_EDIT_RESOURCES = new int [] {
             R.drawable.edit_yellow,
             R.drawable.edit_blue,
@@ -48,6 +59,7 @@ public class ResourceParser {
             R.drawable.edit_red
         };
 
+        // 编辑页面标题栏背景图片
         private final static int [] BG_EDIT_TITLE_RESOURCES = new int [] {
             R.drawable.edit_title_yellow,
             R.drawable.edit_title_blue,
@@ -56,15 +68,20 @@ public class ResourceParser {
             R.drawable.edit_title_red
         };
 
+        // 获取笔记编辑页整体背景
         public static int getNoteBgResource(int id) {
             return BG_EDIT_RESOURCES[id];
         }
 
+        // 获取笔记编辑页标题背景
         public static int getNoteTitleBgResource(int id) {
             return BG_EDIT_TITLE_RESOURCES[id];
         }
     }
 
+    /**
+     * 获取默认背景ID（支持随机颜色设置）
+     */
     public static int getDefaultBgId(Context context) {
         if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 NotesPreferenceActivity.PREFERENCE_SET_BG_COLOR_KEY, false)) {
@@ -74,7 +91,9 @@ public class ResourceParser {
         }
     }
 
+    // ==================== 笔记列表项背景资源 ====================
     public static class NoteItemBgResources {
+        // 列表第一项背景
         private final static int [] BG_FIRST_RESOURCES = new int [] {
             R.drawable.list_yellow_up,
             R.drawable.list_blue_up,
@@ -83,6 +102,7 @@ public class ResourceParser {
             R.drawable.list_red_up
         };
 
+        // 列表中间项背景
         private final static int [] BG_NORMAL_RESOURCES = new int [] {
             R.drawable.list_yellow_middle,
             R.drawable.list_blue_middle,
@@ -91,6 +111,7 @@ public class ResourceParser {
             R.drawable.list_red_middle
         };
 
+        // 列表最后一项背景
         private final static int [] BG_LAST_RESOURCES = new int [] {
             R.drawable.list_yellow_down,
             R.drawable.list_blue_down,
@@ -99,6 +120,7 @@ public class ResourceParser {
             R.drawable.list_red_down,
         };
 
+        // 列表只有一项时的背景
         private final static int [] BG_SINGLE_RESOURCES = new int [] {
             R.drawable.list_yellow_single,
             R.drawable.list_blue_single,
@@ -123,12 +145,15 @@ public class ResourceParser {
             return BG_NORMAL_RESOURCES[id];
         }
 
+        // 获取文件夹专用背景
         public static int getFolderBgRes() {
             return R.drawable.list_folder;
         }
     }
 
+    // ==================== 桌面小部件背景资源 ====================
     public static class WidgetBgResources {
+        // 2x 小部件背景
         private final static int [] BG_2X_RESOURCES = new int [] {
             R.drawable.widget_2x_yellow,
             R.drawable.widget_2x_blue,
@@ -141,6 +166,7 @@ public class ResourceParser {
             return BG_2X_RESOURCES[id];
         }
 
+        // 4x 小部件背景
         private final static int [] BG_4X_RESOURCES = new int [] {
             R.drawable.widget_4x_yellow,
             R.drawable.widget_4x_blue,
@@ -154,6 +180,7 @@ public class ResourceParser {
         }
     }
 
+    // ==================== 文字样式资源 ====================
     public static class TextAppearanceResources {
         private final static int [] TEXTAPPEARANCE_RESOURCES = new int [] {
             R.style.TextAppearanceNormal,
@@ -162,18 +189,16 @@ public class ResourceParser {
             R.style.TextAppearanceSuper
         };
 
+        // 获取对应文字大小样式
         public static int getTexAppearanceResource(int id) {
-            /**
-             * HACKME: Fix bug of store the resource id in shared preference.
-             * The id may larger than the length of resources, in this case,
-             * return the {@link ResourceParser#BG_DEFAULT_FONT_SIZE}
-             */
+            // 安全处理：防止越界
             if (id >= TEXTAPPEARANCE_RESOURCES.length) {
                 return BG_DEFAULT_FONT_SIZE;
             }
             return TEXTAPPEARANCE_RESOURCES[id];
         }
 
+        // 获取文字大小总数量
         public static int getResourcesSize() {
             return TEXTAPPEARANCE_RESOURCES.length;
         }
