@@ -1,9 +1,5 @@
 [
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\dialog_edit.xml",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\dialog_edit.xml"
-    },
-    {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\add_account_text.xml",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\add_account_text.xml"
     },

@@ -78,19 +78,12 @@
                 android:layout_height="7dip"
                 android:background="@drawable/bg_color_btn_mask" />
 
-            <Button
-                android:id="@+id/button_play_audio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="播放录音" />
 
             <Button
                 android:id="@+id/clearButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="一键清空"
-                android:layout_gravity="top|right"
-                android:layout_marginTop="-48dp"
                 />
 
             <!--            <Button-->
@@ -120,13 +113,12 @@
                         android:id="@+id/note_edit_view"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="left|top"
-                        android:background="@null"
                         android:autoLink="all"
+                        android:background="@null"
+                        android:gravity="left|top"
+                        android:lineSpacingMultiplier="1.2"
                         android:linksClickable="false"
                         android:minLines="12"
-                        android:textAppearance="@style/TextAppearancePrimaryItem"
-                        android:lineSpacingMultiplier="1.2"
                         tools:ignore="DuplicateIds" />
 
                     <LinearLayout

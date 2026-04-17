@@ -16,12 +16,12 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\note_edit_list_item.xml"
     },
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_font_super.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\font_super.png"
-    },
-    {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_new_note.xml.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\new_note.xml"
+    },
+    {
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_font_super.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\font_super.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\raw_testmusic.wav.flat",
@@ -40,20 +40,12 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\list_yellow_up.9.png"
     },
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_blue_middle.9.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\list_blue_middle.9.png"
-    },
-    {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\raw_introduction.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\raw\\introduction"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\layout_settings_header.xml.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\settings_header.xml"
-    },
-    {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_green_single.9.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\list_green_single.9.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_font_size_selector_bg.9.png.flat",
@@ -80,20 +72,12 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\menu\\call_record_folder.xml"
     },
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_title_bar_bg.9.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\title_bar_bg.9.png"
-    },
-    {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_edit_title_white.9.png.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\edit_title_white.9.png"
     },
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_folder.9.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\list_folder.9.png"
-    },
-    {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_white_middle.9.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\list_white_middle.9.png"
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_title_bar_bg.9.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\title_bar_bg.9.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_white_single.9.png.flat",
@@ -104,6 +88,10 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\widget_2x_red.png"
     },
     {
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_list_green_single.9.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\list_green_single.9.png"
+    },
+    {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\layout_widget_4x.xml.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\widget_4x.xml"
     },
@@ -112,12 +100,16 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\xml\\preferences.xml"
     },
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_note_edit_color_selector_panel.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\note_edit_color_selector_panel.png"
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_xuenai.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\xuenai.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_widget_4x_red.png.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\widget_4x_red.png"
+    },
+    {
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_note_edit_color_selector_panel.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\note_edit_color_selector_panel.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_dropdown_icon.9.png.flat",
@@ -208,6 +200,10 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\search_list.xml"
     },
     {
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_list_green_down.9.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\list_green_down.9.png"
+    },
+    {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_font_normal.png.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\font_normal.png"
     },
@@ -220,12 +216,12 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\menu\\note_list_dropdown.xml"
     },
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\layout_note_list_dropdown_menu.xml.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\note_list_dropdown_menu.xml"
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_list_folder.9.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\list_folder.9.png"
     },
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\layout_dialog_edit.xml.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\dialog_edit.xml"
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\layout_note_list_dropdown_menu.xml.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\note_list_dropdown_menu.xml"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_keli.png.flat",
@@ -272,12 +268,16 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\notification.png"
     },
     {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_green_down.9.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\list_green_down.9.png"
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_list_blue_middle.9.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\list_blue_middle.9.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_call_record.png.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\call_record.png"
+    },
+    {
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_list_white_middle.9.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\list_white_middle.9.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_yellow_down.9.png.flat",
@@ -324,6 +324,14 @@
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\title_alert.png"
     },
     {
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_img.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\img.png"
+    },
+    {
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_jieyi.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\jieyi.png"
+    },
+    {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\xml_widget_4x_info.xml.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\xml\\widget_4x_info.xml"
     },
@@ -346,10 +354,6 @@
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\xml_searchable.xml.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\xml\\searchable.xml"
-    },
-    {
-        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_list_blue_single.9.png.flat",
-        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable-hdpi\\list_blue_single.9.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_edit_green.9.png.flat",
@@ -398,6 +402,10 @@
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\layout_account_dialog_title.xml.flat",
         "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\layout\\account_dialog_title.xml"
+    },
+    {
+        "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable_list_blue_single.9.png.flat",
+        "source": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\src\\main\\res\\drawable\\list_blue_single.9.png"
     },
     {
         "merged": "D:\\d\\photp\\Notes-master\\NOTESMASTER\\app\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_menu_move.png.flat",

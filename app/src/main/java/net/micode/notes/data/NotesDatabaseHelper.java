@@ -16,15 +16,23 @@
 
 package net.micode.notes.data;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.util.Log;
 
 import net.micode.notes.data.Notes.DataColumns;
 import net.micode.notes.data.Notes.DataConstants;
 import net.micode.notes.data.Notes.NoteColumns;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 便签数据库辅助类，负责创建和管理数据库。
@@ -359,6 +367,65 @@ public class NotesDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public List<String> dosearch(String querystring) //搜索时不区分大小写
+    {
+        Cursor cursor = null;
+        List<String> results = new ArrayList<>();
+
+        SQLiteDatabase db = mInstance.getReadableDatabase();
+        String query_sql_string = "select * from " + TABLE.DATA + " where content like " + "'%"+ querystring + "%'";
+        Log.i(TAG,query_sql_string);
+        cursor = db.rawQuery(query_sql_string,null);
+        if(cursor!=null)
+        {
+            while(cursor.moveToNext())
+            {
+                String content = cursor.getString(cursor.getColumnIndex("content"));
+
+                // 过滤包含特定字符串的[local]和[/local]部分
+                if(filterLocalContent(content, querystring)){
+                    results.add(content);
+                }
+                //打印测试
+                Log.i(TAG, content);
+                int id = cursor.getInt(cursor.getColumnIndex("_id")); // 获取便签 ID
+                //构造便签笔记的 URI
+                Uri noteUri = ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, id);
+                Log.e(TAG, String.valueOf(noteUri));
+                //启动便签笔记编辑器页面
+                //这里启动的页面放在ShowReultActivity活动文件中去
+
+            }
+        }
+        cursor.close();
+        return results;
+    }
+
+    private boolean filterLocalContent(String content, String querystring) {
+        Pattern pattern = Pattern.compile("\\[local\\](.*?)\\[/local\\]");
+        Matcher matcher = pattern.matcher(content);
+
+        StringBuilder filteredContent = new StringBuilder();
+        int lastIndex = 0;
+        while (matcher.find()) {
+            String match = matcher.group(1); // 获取匹配到的文本内容
+            filteredContent.append(content, lastIndex, matcher.start()); // 添加匹配前的文本
+            lastIndex = matcher.end(); // 更新最后一个匹配结束的索引位置
+
+            if (match.contains(querystring)) {
+                return false;
+            }else{
+                filteredContent.append(match); // 添加不包含查询字符串的匹配文本
+            }
+        }
+
+        if (lastIndex < content.length()) {
+            filteredContent.append(content.substring(lastIndex)); // 添加剩余的文本内容
+        }
+        Log.e(TAG,filteredContent.toString());
+
+        return true;
+    }
     /**
      * 升级到版本2：删除旧表并重新创建
      */

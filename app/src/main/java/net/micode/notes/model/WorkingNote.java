@@ -54,7 +54,7 @@ public class WorkingNote {
     // Note Id - 笔记ID
     private long mNoteId;
     // Note content - 笔记内容
-    private String mContent;
+    public String mContent;
     // Note mode - 笔记模式（普通/清单）
     private int mMode;
     // 空行

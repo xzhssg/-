@@ -610,6 +610,8 @@ drawable font_small
 drawable font_super
 drawable hutao
 drawable icon_app
+drawable img
+drawable jieyi
 drawable keli
 drawable list_background
 drawable list_blue_down
@@ -671,6 +673,7 @@ drawable widget_4x_green
 drawable widget_4x_red
 drawable widget_4x_white
 drawable widget_4x_yellow
+drawable xuenai
 id ALT
 id CTRL
 id FUNCTION
@@ -711,7 +714,6 @@ id bottom
 id btn_new_note
 id btn_set_bg_color
 id buttonPanel
-id button_play_audio
 id cb_edit_item
 id center
 id center_horizontal
@@ -737,7 +739,6 @@ id edit_text
 id end
 id et_edit_text
 id et_foler_name
-id et_phone
 id expand_activities_button
 id expanded_menu
 id fill
@@ -770,7 +771,6 @@ id iv_large_select
 id iv_medium_select
 id iv_small_select
 id iv_super_select
-id join_password
 id left
 id line1
 id line3
@@ -789,15 +789,12 @@ id menu_export_png
 id menu_export_text
 id menu_font_size
 id menu_hutao
-id menu_insert_audio
 id menu_keli
 id menu_list_mode
 id menu_moren
 id menu_new_folder
 id menu_new_note
-id menu_quit_secret
 id menu_search
-id menu_secret
 id menu_select_image
 id menu_send_to_desktop
 id menu_setting
@@ -810,7 +807,6 @@ id move
 id multiply
 id navigation_bar
 id never
-id no
 id none
 id normal
 id note_bg_color_selector
@@ -822,7 +818,6 @@ id notes_list
 id notification_background
 id notification_main_column
 id notification_main_column_container
-id out_password
 id parentPanel
 id prefenerece_sync_status_textview
 id preference_sync_button
@@ -848,7 +843,6 @@ id search_src_text
 id search_voice_btn
 id select_dialog_listview
 id selection_menu
-id set_password
 id shortcut
 id showCustom
 id showHome
@@ -891,7 +885,6 @@ id widget_bg_image
 id widget_text
 id withText
 id wrap_content
-id yes
 integer abc_config_activityDefaultDur
 integer abc_config_activityShortDur
 integer cancel_button_image_alpha
@@ -930,7 +923,6 @@ layout acticity_word
 layout activity_splash
 layout add_account_text
 layout datetime_picker
-layout dialog_edit
 layout dialog_edit_text
 layout folder_list_item
 layout note_edit
@@ -1040,7 +1032,6 @@ string hint_foler_name
 string info_note_enter_desktop
 string invalid_password
 string invalid_username
-string join_password
 string login_failed
 string menu_alert
 string menu_create_folder
@@ -1062,10 +1053,8 @@ string menu_moren
 string menu_move
 string menu_move_parent_folder
 string menu_normal_mode
-string menu_quit_secret
 string menu_remove_remind
 string menu_search
-string menu_secret
 string menu_select_all
 string menu_select_none
 string menu_select_title
@@ -1084,7 +1073,6 @@ string notealert_enter
 string notealert_ok
 string notelist_menu_new
 string notelist_string_info
-string out_password
 string preferences_account_summary
 string preferences_account_title
 string preferences_add_account
@@ -1112,7 +1100,6 @@ string search_hint
 string search_label
 string search_menu_title
 string search_setting_description
-string set_password
 string set_remind_time_message
 string status_bar_notification_info_overflow
 string success_sdcard_export

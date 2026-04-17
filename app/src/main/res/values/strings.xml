@@ -42,8 +42,8 @@
     <string name="format_folder_files_count" translatable="false">(%d)</string>
 
     <!--首页的背景图切换-->
-    <string name="menu_hutao" translatable="false">背景切换:胡桃</string>
-    <string name="menu_keli" translatable="false">背景切换:可莉</string>
+    <string name="menu_hutao" translatable="false">背景切换:結衣</string>
+    <string name="menu_keli" translatable="false">背景切换:雪乃</string>
     <string name="menu_create_folder">新建文件夹</string>
     <string name="menu_export_text">导出文本</string>
     <string name="menu_sync">同步</string>
@@ -71,8 +71,6 @@
     <string name="menu_send_to_desktop">发送桌面</string>
     <string name="menu_alert">定时提醒我</string>
     <string name="menu_remove_remind">删除定时提醒</string>
-    <string name="join_password" translatable="false">加入笔记锁</string>
-    <string name="out_password" translatable="false">删除笔记锁</string>
     <string name="menu_title_select_folder">选择文件夹</string>
     <string name="menu_move_parent_folder">根目录</string>
     <string name="info_note_enter_desktop">笔记添加到桌面</string>
@@ -154,9 +152,5 @@
     <string name="prompt_account" translatable="false">欢迎进入登陆界面</string>
     <string name="prompt_login" translatable="false">注册</string>
     <string name="menu_moren" translatable="false">默认背景</string>
-
-    <string name="menu_secret" translatable="false">私密模式</string>
-    <string name="menu_quit_secret" translatable="false">退出私密模式</string>
-    <string name="set_password" translatable="false">设置笔记锁密码</string>
 
 </resources>
